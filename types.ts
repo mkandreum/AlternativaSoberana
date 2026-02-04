@@ -16,6 +16,7 @@ export interface ProgramItem {
 }
 
 export enum AppTab {
+  GOVERNMENT = 'GOVERNMENT',
   BUSINESS = 'BUSINESS',
   FOOD = 'FOOD',
   CITIZEN = 'CITIZEN'

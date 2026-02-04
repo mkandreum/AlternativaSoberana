@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AppTab } from '../types';
-import { CheckCircle, AlertTriangle, Store, ScanBarcode, ArrowRight, RefreshCw, Smartphone, Camera, Fingerprint, Wallet, GraduationCap, Bell } from 'lucide-react';
+import { CheckCircle, AlertTriangle, Store, ScanBarcode, ArrowRight, Smartphone, Wallet, GraduationCap, Bell, Fingerprint, LayoutDashboard, FileText, Activity, ShieldCheck, MapPin } from 'lucide-react';
 
 const AppDemo: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<AppTab>(AppTab.BUSINESS);
+  const [activeTab, setActiveTab] = useState<AppTab>(AppTab.GOVERNMENT);
   
   // State for Business App
   const [businessStep, setBusinessStep] = useState(0); 
   const [businessName, setBusinessName] = useState('');
-  const [isProcessing, setIsProcessing] = useState(false);
 
   // State for Food App
   const [foodStep, setFoodStep] = useState(0); 
@@ -17,20 +16,21 @@ const AppDemo: React.FC = () => {
   // State for Citizen App
   const [citizenStep, setCitizenStep] = useState(0);
 
+  // State for Government App
+  const [govStep, setGovStep] = useState(0);
+
   const handleBusinessSubmit = () => {
     if (!businessName) return;
     setBusinessStep(1);
-    setIsProcessing(true);
+    // Simulate complex background checks
     setTimeout(() => {
-      setIsProcessing(false);
       setBusinessStep(2);
-    }, 2000); 
+    }, 2500); 
   };
 
   const resetBusiness = () => {
     setBusinessStep(0);
     setBusinessName('');
-    setIsProcessing(false);
   };
 
   const autoFillBusiness = () => {
@@ -38,9 +38,10 @@ const AppDemo: React.FC = () => {
   };
 
   return (
-    <section id="demos" className="py-24 bg-slate-900 overflow-hidden relative">
+    <section id="demos" className="py-24 bg-slate-950 overflow-hidden relative border-t border-slate-800">
       {/* Background decoration */}
-      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-800 via-slate-900 to-black opacity-50"></div>
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-orange-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none"></div>
       
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
@@ -51,47 +52,57 @@ const AppDemo: React.FC = () => {
               <Smartphone size={14} />
               Proyecto Estado 1-Click
             </div>
-            <h2 className="text-4xl lg:text-6xl font-extrabold mb-6 leading-tight">
+            <h2 className="text-4xl lg:text-5xl font-extrabold mb-6 leading-tight">
               La Administración <br/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">en tu bolsillo.</span>
             </h2>
             <p className="text-slate-400 text-lg mb-8 leading-relaxed">
-              La infraestructura digital está lista. No son maquetas, es lógica real aplicada a problemas reales.
-              Prueba la simplicidad de un Estado que funciona.
+              Hemos fusionado 21 portales en una sola interfaz. La infraestructura digital está lista. No son maquetas, es lógica real aplicada a problemas reales.
             </p>
 
-            {/* App Selection Tabs */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-8">
+            {/* App Selection Tabs - Grid Layout */}
+            <div className="grid grid-cols-2 gap-3 mb-8">
+              <button 
+                onClick={() => { setActiveTab(AppTab.GOVERNMENT); setGovStep(0); }}
+                className={`p-4 rounded-xl font-bold transition-all border text-left flex items-center gap-3 ${activeTab === AppTab.GOVERNMENT ? 'bg-slate-800 text-white border-orange-500 shadow-lg shadow-orange-900/20' : 'bg-slate-900/50 text-slate-400 border-slate-800 hover:bg-slate-800'}`}
+              >
+                <div className="p-2 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg text-white"><LayoutDashboard size={18} /></div>
+                <div>
+                  <div className="text-[10px] opacity-70 uppercase tracking-wider">Dashboard</div>
+                  <div className="text-sm">MiGobierno</div>
+                </div>
+              </button>
+
               <button 
                 onClick={() => { setActiveTab(AppTab.BUSINESS); resetBusiness(); }}
-                className={`flex-1 p-4 rounded-xl font-bold transition-all border text-left flex items-center gap-3 ${activeTab === AppTab.BUSINESS ? 'bg-orange-600 text-white border-orange-500 shadow-lg scale-105' : 'bg-slate-800/50 text-slate-400 border-slate-700 hover:bg-slate-800'}`}
+                className={`p-4 rounded-xl font-bold transition-all border text-left flex items-center gap-3 ${activeTab === AppTab.BUSINESS ? 'bg-slate-800 text-white border-blue-500 shadow-lg shadow-blue-900/20' : 'bg-slate-900/50 text-slate-400 border-slate-800 hover:bg-slate-800'}`}
               >
-                <div className="p-2 bg-white/10 rounded-lg"><Store size={20} /></div>
+                <div className="p-2 bg-blue-600 rounded-lg text-white"><Store size={18} /></div>
                 <div>
-                  <div className="text-xs opacity-70 uppercase">Emprendedor</div>
-                  <div>MiNegocio</div>
+                  <div className="text-[10px] opacity-70 uppercase tracking-wider">Empresa</div>
+                  <div className="text-sm">MiNegocio</div>
                 </div>
               </button>
               
               <button 
                 onClick={() => { setActiveTab(AppTab.CITIZEN); setCitizenStep(0); }}
-                className={`flex-1 p-4 rounded-xl font-bold transition-all border text-left flex items-center gap-3 ${activeTab === AppTab.CITIZEN ? 'bg-blue-600 text-white border-blue-500 shadow-lg scale-105' : 'bg-slate-800/50 text-slate-400 border-slate-700 hover:bg-slate-800'}`}
+                className={`p-4 rounded-xl font-bold transition-all border text-left flex items-center gap-3 ${activeTab === AppTab.CITIZEN ? 'bg-slate-800 text-white border-purple-500 shadow-lg shadow-purple-900/20' : 'bg-slate-900/50 text-slate-400 border-slate-800 hover:bg-slate-800'}`}
               >
-                <div className="p-2 bg-white/10 rounded-lg"><Wallet size={20} /></div>
+                <div className="p-2 bg-purple-600 rounded-lg text-white"><Wallet size={18} /></div>
                 <div>
-                  <div className="text-xs opacity-70 uppercase">Ciudadano</div>
-                  <div>MiCarpeta</div>
+                  <div className="text-[10px] opacity-70 uppercase tracking-wider">Personal</div>
+                  <div className="text-sm">MiCarpeta</div>
                 </div>
               </button>
 
               <button 
                 onClick={() => { setActiveTab(AppTab.FOOD); setFoodStep(0); }}
-                className={`flex-1 p-4 rounded-xl font-bold transition-all border text-left flex items-center gap-3 ${activeTab === AppTab.FOOD ? 'bg-green-600 text-white border-green-500 shadow-lg scale-105' : 'bg-slate-800/50 text-slate-400 border-slate-700 hover:bg-slate-800'}`}
+                className={`p-4 rounded-xl font-bold transition-all border text-left flex items-center gap-3 ${activeTab === AppTab.FOOD ? 'bg-slate-800 text-white border-green-500 shadow-lg shadow-green-900/20' : 'bg-slate-900/50 text-slate-400 border-slate-800 hover:bg-slate-800'}`}
               >
-                <div className="p-2 bg-white/10 rounded-lg"><ScanBarcode size={20} /></div>
+                <div className="p-2 bg-green-600 rounded-lg text-white"><ScanBarcode size={18} /></div>
                 <div>
-                  <div className="text-xs opacity-70 uppercase">Consumo</div>
-                  <div>ComeLocal</div>
+                  <div className="text-[10px] opacity-70 uppercase tracking-wider">Consumo</div>
+                  <div className="text-sm">ComeLocal</div>
                 </div>
               </button>
             </div>
@@ -102,17 +113,19 @@ const AppDemo: React.FC = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="p-6 bg-slate-800/50 rounded-2xl border border-slate-700 backdrop-blur-md"
+                className="p-6 bg-slate-900 rounded-2xl border border-slate-800"
               >
                 <h3 className="font-bold text-white mb-2 flex items-center gap-2 text-lg">
-                  {activeTab === AppTab.BUSINESS && "Caso: Abrir un Bar en 24h"}
-                  {activeTab === AppTab.CITIZEN && "Caso: Beca Universitaria Proactiva"}
-                  {activeTab === AppTab.FOOD && "Caso: Soberanía Alimentaria"}
+                  {activeTab === AppTab.GOVERNMENT && "Control Total en un vistazo"}
+                  {activeTab === AppTab.BUSINESS && "Fusión de 3 ministerios y ayuntamiento"}
+                  {activeTab === AppTab.CITIZEN && "Tus datos trabajan para ti"}
+                  {activeTab === AppTab.FOOD && "Soberanía alimentaria en tiempo real"}
                 </h3>
                 <p className="text-slate-400 text-sm leading-relaxed">
-                  {activeTab === AppTab.BUSINESS && "Olvida los 12 trámites y 6 meses de espera. MiNegocio fusiona Hacienda, Seguridad Social y Ayuntamiento en un solo paso. Licencia provisional inmediata."}
-                  {activeTab === AppTab.CITIZEN && "El Estado ya sabe tus datos. No los pidas de nuevo. Cruzamos renta y notas para ofrecerte la beca antes de que la pidas. 1 Clic."}
-                  {activeTab === AppTab.FOOD && "Escanea productos para ver la verdad: origen real, pesticidas usados y si cumple normativa UE. Empoderamiento del consumidor."}
+                  {activeTab === AppTab.GOVERNMENT && "El nuevo portal unificado 'MiGobierno.es' centraliza AEAT, Seguridad Social y DGT. Recibe alertas proactivas antes de que te multen."}
+                  {activeTab === AppTab.BUSINESS && "Analizamos tu solicitud contra 21 bases de datos en tiempo real. Si cumples, tienes licencia provisional inmediata bajo declaración responsable."}
+                  {activeTab === AppTab.CITIZEN && "Sistema IDÚNICO. Carpeta ciudadana que bloquea solicitudes de documentos duplicados. Beca proactiva calculada antes de pedirla."}
+                  {activeTab === AppTab.FOOD && "La Ley de Cláusula Espejo en tu mano. Escanea para detectar productos que no cumplen normativas UE que sí se exigen a los nuestros."}
                 </p>
               </motion.div>
             </AnimatePresence>
@@ -121,52 +134,159 @@ const AppDemo: React.FC = () => {
           {/* PHONE MOCKUP */}
           <div className="lg:w-1/2 flex justify-center perspective-1000">
             <motion.div 
-              initial={{ rotateY: -10, rotateX: 5 }}
+              initial={{ rotateY: -5, rotateX: 2 }}
               animate={{ rotateY: 0, rotateX: 0 }}
               transition={{ duration: 1 }}
-              className="relative w-[340px] h-[680px] bg-slate-950 rounded-[3.5rem] border-[10px] border-slate-800 shadow-2xl overflow-hidden ring-1 ring-white/10"
+              className="relative w-[340px] h-[680px] bg-slate-950 rounded-[3.5rem] border-[8px] border-slate-800 shadow-2xl overflow-hidden ring-1 ring-white/10"
             >
-              {/* Hardware details */}
-              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-7 bg-black rounded-b-2xl z-20 flex justify-center items-center">
-                <div className="w-16 h-4 bg-slate-900/50 rounded-full"></div>
+              {/* Dynamic Notch/Dynamic Island area */}
+              <div className="absolute top-0 left-0 w-full h-14 z-30 bg-black/20 backdrop-blur-sm flex justify-center items-end pb-2">
+                 <div className="w-24 h-6 bg-black rounded-full flex items-center justify-center gap-2 px-2">
+                    <div className="w-1 h-1 bg-green-500 rounded-full animate-pulse"></div>
+                    <div className="w-1 h-1 bg-orange-500 rounded-full animate-pulse delay-75"></div>
+                 </div>
               </div>
               
               {/* Screen Content */}
-              <div className="w-full h-full bg-slate-50 relative flex flex-col pt-10 font-sans">
+              <div className="w-full h-full bg-slate-50 relative flex flex-col font-sans">
                 
                 {/* Dynamic App Header */}
-                <div className="px-5 pb-3 bg-white/80 backdrop-blur-md sticky top-0 z-10 border-b border-slate-100 flex justify-between items-center shadow-sm">
+                <div className={`px-5 pt-14 pb-4 sticky top-0 z-20 flex justify-between items-center shadow-sm transition-colors duration-300 ${
+                  activeTab === AppTab.GOVERNMENT ? 'bg-slate-900 text-white' : 
+                  'bg-white text-slate-900'
+                }`}>
                   <div className="flex items-center gap-2">
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-white ${
-                        activeTab === AppTab.BUSINESS ? 'bg-orange-600' : 
-                        activeTab === AppTab.CITIZEN ? 'bg-blue-600' : 'bg-green-600'
+                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-white shadow-sm ${
+                        activeTab === AppTab.GOVERNMENT ? 'bg-gradient-to-br from-orange-500 to-red-600' :
+                        activeTab === AppTab.BUSINESS ? 'bg-blue-600' : 
+                        activeTab === AppTab.CITIZEN ? 'bg-purple-600' : 'bg-green-600'
                     }`}>
+                       {activeTab === AppTab.GOVERNMENT && <LayoutDashboard size={16} />}
                        {activeTab === AppTab.BUSINESS && <Store size={16} />}
                        {activeTab === AppTab.CITIZEN && <Wallet size={16} />}
                        {activeTab === AppTab.FOOD && <ScanBarcode size={16} />}
                     </div>
-                    <span className="font-bold text-slate-800 text-sm tracking-tight">
-                      {activeTab === AppTab.BUSINESS && 'MiNegocio'}
-                      {activeTab === AppTab.CITIZEN && 'MiCarpeta'}
-                      {activeTab === AppTab.FOOD && 'ComeLocal'}
-                    </span>
+                    <div>
+                        <span className="font-bold text-sm tracking-tight block leading-none">
+                        {activeTab === AppTab.GOVERNMENT && 'MiGobierno'}
+                        {activeTab === AppTab.BUSINESS && 'MiNegocio'}
+                        {activeTab === AppTab.CITIZEN && 'MiCarpeta'}
+                        {activeTab === AppTab.FOOD && 'ComeLocal'}
+                        </span>
+                        <span className="text-[10px] opacity-60 font-medium">Gobierno de España</span>
+                    </div>
                   </div>
-                  <div className="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center">
-                    <Fingerprint size={16} className="text-slate-400" />
+                  <div className={`w-8 h-8 rounded-full border flex items-center justify-center ${activeTab === AppTab.GOVERNMENT ? 'border-slate-700 bg-slate-800' : 'border-slate-200 bg-slate-100'}`}>
+                    <Fingerprint size={16} className={activeTab === AppTab.GOVERNMENT ? 'text-slate-400' : 'text-slate-400'} />
                   </div>
                 </div>
 
-                <div className="flex-1 p-5 relative overflow-hidden bg-slate-50">
+                <div className={`flex-1 relative overflow-hidden flex flex-col ${activeTab === AppTab.GOVERNMENT ? 'bg-slate-900' : 'bg-slate-50'}`}>
                   <AnimatePresence mode="wait">
                     
+                    {/* --- GOVERNMENT SUPER APP --- */}
+                    {activeTab === AppTab.GOVERNMENT && (
+                      <motion.div key="gov" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="h-full flex flex-col p-5">
+                         {govStep === 0 && (
+                            <>
+                                <div className="mb-6">
+                                    <h2 className="text-2xl text-white font-light">Hola, <span className="font-bold">Carlos</span></h2>
+                                    <p className="text-slate-400 text-xs">ID Digital Verificado • Nivel 5 de Ciudadanía</p>
+                                </div>
+
+                                {/* Alerts Section */}
+                                <div className="space-y-3 mb-6">
+                                    <div className="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-slate-500">
+                                        <span>Alertas Pendientes</span>
+                                        <span className="bg-red-500 text-white px-2 rounded-full">2</span>
+                                    </div>
+                                    <motion.button 
+                                        onClick={() => setGovStep(1)}
+                                        whileTap={{scale: 0.98}}
+                                        className="w-full bg-slate-800 p-4 rounded-xl border-l-4 border-red-500 flex items-start gap-3 shadow-lg"
+                                    >
+                                        <div className="bg-red-500/20 p-2 rounded-lg text-red-500"><Activity size={18} /></div>
+                                        <div className="text-left">
+                                            <h4 className="text-white font-bold text-sm">Declaración Trimestral IVA</h4>
+                                            <p className="text-slate-400 text-xs mt-1">Vence en 3 días. Autocompletado listo.</p>
+                                        </div>
+                                    </motion.button>
+                                    <div className="w-full bg-slate-800 p-4 rounded-xl border-l-4 border-yellow-500 flex items-start gap-3 shadow-lg opacity-60">
+                                        <div className="bg-yellow-500/20 p-2 rounded-lg text-yellow-500"><MapPin size={18} /></div>
+                                        <div className="text-left">
+                                            <h4 className="text-white font-bold text-sm">Renovación ITV</h4>
+                                            <p className="text-slate-400 text-xs mt-1">Vehículo 1234-BBB. Pedir cita.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Quick Stats */}
+                                <div className="grid grid-cols-2 gap-3">
+                                    <div className="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                                        <div className="text-slate-400 text-[10px] uppercase">Ahorro Anual</div>
+                                        <div className="text-green-400 font-bold text-xl">450 €</div>
+                                        <div className="text-slate-500 text-[10px]">en devoluciones</div>
+                                    </div>
+                                    <div className="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                                        <div className="text-slate-400 text-[10px] uppercase">Trámites</div>
+                                        <div className="text-white font-bold text-xl">4</div>
+                                        <div className="text-slate-500 text-[10px]">este año</div>
+                                    </div>
+                                </div>
+                            </>
+                         )}
+                         {govStep === 1 && (
+                             <div className="flex-1 flex flex-col">
+                                 <div className="flex items-center gap-2 mb-6 text-slate-400 cursor-pointer" onClick={() => setGovStep(0)}>
+                                     <ArrowRight className="rotate-180" size={16} /> <span>Volver</span>
+                                 </div>
+                                 <div className="bg-slate-800 rounded-2xl p-6 border border-slate-700 mb-6">
+                                     <h3 className="text-white font-bold text-lg mb-4">Modelo 303 (IVA)</h3>
+                                     <div className="space-y-4">
+                                         <div className="flex justify-between text-sm border-b border-slate-700 pb-2">
+                                             <span className="text-slate-400">Ingresos (Facturas Elec.)</span>
+                                             <span className="text-white font-mono">12.450 €</span>
+                                         </div>
+                                         <div className="flex justify-between text-sm border-b border-slate-700 pb-2">
+                                             <span className="text-slate-400">Gastos Deducibles</span>
+                                             <span className="text-white font-mono">4.200 €</span>
+                                         </div>
+                                         <div className="flex justify-between text-lg font-bold pt-2">
+                                             <span className="text-white">A Pagar</span>
+                                             <span className="text-green-400 font-mono">1.732 €</span>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <button onClick={() => setGovStep(2)} className="w-full py-4 bg-orange-600 hover:bg-orange-500 text-white rounded-xl font-bold shadow-lg shadow-orange-900/40 flex justify-center items-center gap-2">
+                                     <Fingerprint size={20} /> Firmar y Pagar
+                                 </button>
+                             </div>
+                         )}
+                         {govStep === 2 && (
+                             <div className="flex-1 flex flex-col items-center justify-center text-center">
+                                 <motion.div 
+                                    initial={{scale: 0}} animate={{scale: 1}}
+                                    className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center text-white mb-6 shadow-[0_0_30px_rgba(34,197,94,0.4)]"
+                                 >
+                                     <CheckCircle size={40} />
+                                 </motion.div>
+                                 <h2 className="text-2xl font-bold text-white mb-2">Trámite Completado</h2>
+                                 <p className="text-slate-400 mb-8 px-4 text-sm">Recibo PDF guardado en tu Carpeta Ciudadana. Notificación enviada.</p>
+                                 <button onClick={() => setGovStep(0)} className="text-sm text-orange-400 font-bold">Volver al Dashboard</button>
+                             </div>
+                         )}
+                      </motion.div>
+                    )}
+
                     {/* --- BUSINESS APP --- */}
                     {activeTab === AppTab.BUSINESS && (
-                      <motion.div key="business" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="h-full flex flex-col">
+                      <motion.div key="business" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="h-full flex flex-col p-5">
                         {businessStep === 0 && (
-                          <div className="space-y-6 mt-4 h-full flex flex-col">
-                            <div className="bg-orange-600 rounded-2xl p-6 text-white shadow-lg shadow-orange-900/20">
-                              <h2 className="text-lg font-bold mb-1">Nueva Solicitud</h2>
-                              <p className="text-orange-100 text-xs">Licencia de Apertura Express</p>
+                          <div className="space-y-6 mt-2 h-full flex flex-col">
+                            <div className="bg-blue-600 rounded-2xl p-6 text-white shadow-lg shadow-blue-900/20 relative overflow-hidden">
+                              <div className="absolute -right-4 -top-4 w-24 h-24 bg-white/10 rounded-full"></div>
+                              <h2 className="text-lg font-bold mb-1 relative z-10">Solicitud Única</h2>
+                              <p className="text-blue-100 text-xs relative z-10">Licencia de Apertura + Alta SS + Alta Hacienda</p>
                             </div>
                             <div className="space-y-4 flex-grow">
                               <div className="space-y-1">
@@ -174,30 +294,52 @@ const AppDemo: React.FC = () => {
                                 <input 
                                   type="text" 
                                   placeholder="Ej: Cafetería Madrid"
-                                  className="w-full px-4 py-3.5 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-orange-500 outline-none text-slate-800"
+                                  className="w-full px-4 py-3.5 rounded-xl border border-slate-200 bg-white focus:ring-2 focus:ring-blue-500 outline-none text-slate-800 transition-shadow"
                                   value={businessName}
                                   onChange={(e) => setBusinessName(e.target.value)}
                                 />
-                                {!businessName && <button onClick={autoFillBusiness} className="text-[10px] text-orange-600 font-bold ml-1">Autocompletar</button>}
+                                {!businessName && <button onClick={autoFillBusiness} className="text-[10px] text-blue-600 font-bold ml-1 mt-1">Autocompletar</button>}
                               </div>
                             </div>
-                            <button onClick={handleBusinessSubmit} disabled={!businessName} className="w-full py-4 bg-slate-900 text-white rounded-xl font-bold shadow-xl flex items-center justify-center gap-2">
-                              <span>Solicitar Licencia</span> <ArrowRight size={18} />
+                            <div className="bg-slate-50 p-3 rounded-lg border border-slate-100 text-xs text-slate-500 flex gap-2 items-start">
+                                <ShieldCheck size={14} className="mt-0.5 text-slate-400" />
+                                <span>Al pulsar, se consultarán 21 bases de datos (Catastro, Penales, Deudas) para evitar papeleo.</span>
+                            </div>
+                            <button onClick={handleBusinessSubmit} disabled={!businessName} className="w-full py-4 bg-slate-900 text-white rounded-xl font-bold shadow-xl flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                              <span>Iniciar Trámite Express</span> <ArrowRight size={18} />
                             </button>
                           </div>
                         )}
                         {businessStep === 1 && (
-                          <div className="flex-1 flex flex-col items-center justify-center space-y-6">
-                             <div className="w-16 h-16 border-4 border-orange-200 border-t-orange-600 rounded-full animate-spin"></div>
-                             <p className="text-slate-600 font-medium">Validando 21 bases de datos...</p>
+                          <div className="flex-1 flex flex-col items-center justify-center space-y-8">
+                             <div className="relative">
+                                <div className="w-20 h-20 border-4 border-slate-100 border-t-blue-600 rounded-full animate-spin"></div>
+                                <div className="absolute inset-0 flex items-center justify-center font-bold text-xs text-blue-600">AI</div>
+                             </div>
+                             <div className="space-y-2 text-center w-full px-8">
+                                <p className="text-slate-900 font-bold text-lg">Analizando viabilidad...</p>
+                                <div className="space-y-1">
+                                    <div className="flex justify-between text-xs text-slate-400 border-b border-slate-100 pb-1"><span>Antecedentes Penales</span> <span className="text-green-500 font-bold">OK</span></div>
+                                    <div className="flex justify-between text-xs text-slate-400 border-b border-slate-100 pb-1"><span>Deudas Seguridad Social</span> <span className="text-green-500 font-bold">OK</span></div>
+                                    <div className="flex justify-between text-xs text-slate-400 border-b border-slate-100 pb-1"><span>Licencia Local</span> <span className="text-green-500 font-bold">Disponible</span></div>
+                                </div>
+                             </div>
                           </div>
                         )}
                         {businessStep === 2 && (
                           <div className="flex-1 flex flex-col h-full items-center justify-center text-center">
-                            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center text-green-600 mb-6"><CheckCircle size={40} /></div>
-                            <h2 className="text-2xl font-bold text-slate-900 mb-2">¡Aprobada!</h2>
-                            <p className="text-slate-500 mb-8">Ya puedes abrir tu negocio.</p>
-                            <button onClick={resetBusiness} className="px-6 py-2 bg-slate-100 rounded-lg text-slate-600 font-bold text-sm">Reiniciar</button>
+                            <motion.div initial={{scale:0}} animate={{scale:1}} className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center text-green-600 mb-6 border-4 border-green-50"><CheckCircle size={48} /></motion.div>
+                            <h2 className="text-2xl font-bold text-slate-900 mb-2">¡Licencia Aprobada!</h2>
+                            <p className="text-slate-500 mb-6 text-sm">Tu negocio #BAR-2026 está legalmente activo.</p>
+                            
+                            <div className="bg-slate-50 rounded-xl p-4 w-full mb-6 text-left border border-slate-100">
+                                <div className="text-[10px] uppercase text-slate-400 font-bold mb-1">Próximos pasos</div>
+                                <div className="flex items-center gap-2 text-xs font-bold text-slate-700">
+                                    <span className="w-2 h-2 bg-green-500 rounded-full"></span> Inspección programada: 15/04
+                                </div>
+                            </div>
+
+                            <button onClick={resetBusiness} className="px-6 py-3 bg-slate-900 text-white rounded-lg font-bold text-sm w-full">Finalizar</button>
                           </div>
                         )}
                       </motion.div>
@@ -205,82 +347,86 @@ const AppDemo: React.FC = () => {
 
                     {/* --- CITIZEN APP (BECA) --- */}
                     {activeTab === AppTab.CITIZEN && (
-                      <motion.div key="citizen" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="h-full flex flex-col">
+                      <motion.div key="citizen" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="h-full flex flex-col p-5">
                         {citizenStep === 0 && (
-                          <div className="space-y-4 h-full flex flex-col pt-4">
+                          <div className="space-y-4 h-full flex flex-col pt-2">
+                             
+                             {/* Digital ID Card */}
+                             <div className="bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl p-4 text-white shadow-lg mb-2 relative overflow-hidden">
+                                <div className="flex justify-between items-start relative z-10">
+                                    <div>
+                                        <div className="text-[10px] opacity-70 uppercase">IDÚNICO</div>
+                                        <div className="font-bold text-lg">María García</div>
+                                        <div className="text-xs opacity-80 mt-1">***-***-28K</div>
+                                    </div>
+                                    <Fingerprint className="opacity-50" />
+                                </div>
+                             </div>
+
                              {/* Notification Card */}
                              <motion.div 
                                initial={{x: 20, opacity: 0}}
                                animate={{x: 0, opacity: 1}}
-                               className="bg-white p-4 rounded-2xl shadow-sm border-l-4 border-blue-500 relative cursor-pointer hover:bg-slate-50 transition-colors"
+                               className="bg-white p-4 rounded-2xl shadow-sm border border-purple-100 relative cursor-pointer hover:bg-purple-50 transition-colors group"
                                onClick={() => setCitizenStep(1)}
                              >
+                                <div className="absolute top-4 right-4 w-2 h-2 bg-red-500 rounded-full animate-ping"></div>
                                 <div className="absolute top-4 right-4 w-2 h-2 bg-red-500 rounded-full"></div>
-                                <div className="flex items-center gap-3 mb-2">
-                                   <div className="p-2 bg-blue-100 rounded-lg text-blue-600"><GraduationCap size={16} /></div>
-                                   <span className="text-xs font-bold text-slate-400 uppercase">Proactivo</span>
+                                
+                                <div className="flex items-center gap-3 mb-3">
+                                   <div className="p-2 bg-purple-100 rounded-lg text-purple-600 group-hover:bg-purple-200 transition-colors"><GraduationCap size={18} /></div>
+                                   <span className="text-xs font-bold text-purple-600 uppercase bg-purple-50 px-2 py-0.5 rounded">Proactivo</span>
                                 </div>
-                                <h3 className="font-bold text-slate-800">Beca Universitaria Disponible</h3>
-                                <p className="text-xs text-slate-500 mt-1">Hemos cruzado tus datos. Tienes derecho a 3.450€.</p>
-                                <div className="mt-3 text-blue-600 text-xs font-bold flex items-center gap-1">Ver detalles <ArrowRight size={10} /></div>
+                                <h3 className="font-bold text-slate-800 leading-tight">Tienes derecho a una Beca Universitaria</h3>
+                                <p className="text-xs text-slate-500 mt-2">Hemos cruzado tus datos de Renta y Notas. No necesitas presentar papeles.</p>
+                                <div className="mt-3 text-purple-600 text-xs font-bold flex items-center gap-1">Solicitar con 1 Clic <ArrowRight size={12} /></div>
                              </motion.div>
 
-                             <div className="opacity-50 pointer-events-none space-y-3">
-                                <div className="bg-white p-4 rounded-2xl border border-slate-100">
-                                   <div className="h-2 w-20 bg-slate-200 rounded mb-2"></div>
-                                   <div className="h-2 w-32 bg-slate-100 rounded"></div>
-                                </div>
-                                <div className="bg-white p-4 rounded-2xl border border-slate-100">
-                                   <div className="h-2 w-20 bg-slate-200 rounded mb-2"></div>
-                                   <div className="h-2 w-32 bg-slate-100 rounded"></div>
-                                </div>
+                             <div className="text-xs text-center text-slate-400 mt-auto pb-2">
+                                Sistema "Un Trámite, Una Vez" activo.
                              </div>
                           </div>
                         )}
                         {citizenStep === 1 && (
                            <motion.div initial={{y: 20, opacity: 0}} animate={{y:0, opacity: 1}} className="flex-1 flex flex-col">
-                              <div className="bg-blue-600 text-white p-6 rounded-b-2xl -mx-5 -mt-5 mb-6 pb-10">
-                                 <h2 className="text-xl font-bold">Resumen Beca</h2>
-                                 <p className="opacity-80 text-sm">Curso 2026/2027</p>
-                                 <div className="mt-6 text-center">
-                                    <div className="text-4xl font-extrabold">3.450 €</div>
-                                    <div className="text-xs opacity-70 uppercase tracking-widest mt-1">Importe Total</div>
+                              <div className="bg-purple-600 text-white p-6 rounded-2xl mb-6 shadow-xl shadow-purple-900/20 text-center">
+                                 <h2 className="text-lg font-bold opacity-90">Beca Estimada</h2>
+                                 <div className="mt-2">
+                                    <div className="text-5xl font-extrabold tracking-tighter">3.450€</div>
                                  </div>
                               </div>
                               
-                              <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-100 -mt-8 mx-2 relative z-10 space-y-3 mb-6">
-                                 <div className="flex justify-between text-sm">
-                                    <span className="text-slate-500">Matrícula</span>
+                              <div className="bg-white rounded-xl border border-slate-100 p-4 space-y-3 mb-6">
+                                 <div className="flex justify-between text-sm items-center">
+                                    <span className="text-slate-500 flex items-center gap-2"><FileText size={14}/> Matrícula</span>
                                     <span className="font-bold">1.200 €</span>
                                  </div>
-                                 <div className="flex justify-between text-sm">
-                                    <span className="text-slate-500">Residencia</span>
+                                 <div className="flex justify-between text-sm items-center">
+                                    <span className="text-slate-500 flex items-center gap-2"><LayoutDashboard size={14}/> Residencia</span>
                                     <span className="font-bold">1.500 €</span>
                                  </div>
-                                 <div className="flex justify-between text-sm">
-                                    <span className="text-slate-500">Material</span>
+                                 <div className="flex justify-between text-sm items-center">
+                                    <span className="text-slate-500 flex items-center gap-2"><Activity size={14}/> Material</span>
                                     <span className="font-bold">750 €</span>
                                  </div>
-                              </div>
-
-                              <div className="flex-grow">
-                                 <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg text-xs text-blue-800">
-                                    <CheckCircle size={16} />
-                                    <span>Datos verificados automáticamente (AEAT)</span>
+                                 <div className="border-t border-slate-100 pt-2 mt-2">
+                                    <div className="flex items-center gap-2 text-[10px] text-green-600 font-bold bg-green-50 p-2 rounded">
+                                        <CheckCircle size={12} /> Datos de Renta 2025 verificados (AEAT)
+                                    </div>
                                  </div>
                               </div>
 
-                              <button onClick={() => setCitizenStep(2)} className="w-full py-4 bg-slate-900 text-white rounded-xl font-bold shadow-xl">
-                                 Aceptar en 1 Clic
+                              <button onClick={() => setCitizenStep(2)} className="w-full py-4 bg-slate-900 text-white rounded-xl font-bold shadow-xl mt-auto">
+                                 Aceptar y Recibir
                               </button>
                            </motion.div>
                         )}
                         {citizenStep === 2 && (
                            <div className="flex-1 flex flex-col items-center justify-center text-center">
-                              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center text-green-600 mb-6 animate-bounce"><CheckCircle size={40} /></div>
-                              <h2 className="text-2xl font-bold text-slate-900 mb-2">¡Concedida!</h2>
-                              <p className="text-slate-500 mb-8 px-6">El dinero estará en tu cuenta en 24 horas.</p>
-                              <button onClick={() => setCitizenStep(0)} className="text-sm text-slate-400">Volver al inicio</button>
+                              <motion.div initial={{scale: 0.5}} animate={{scale: 1}} className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center text-green-600 mb-6 border-4 border-green-50"><CheckCircle size={40} /></motion.div>
+                              <h2 className="text-2xl font-bold text-slate-900 mb-2">Transferencia en Camino</h2>
+                              <p className="text-slate-500 mb-8 px-6 text-sm">El dinero estará en tu cuenta en 24 horas laborables.</p>
+                              <button onClick={() => setCitizenStep(0)} className="text-sm text-slate-400 font-bold">Volver al inicio</button>
                            </div>
                         )}
                       </motion.div>
@@ -288,47 +434,72 @@ const AppDemo: React.FC = () => {
 
                     {/* --- FOOD APP --- */}
                     {activeTab === AppTab.FOOD && (
-                      <motion.div key="food" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="h-full flex flex-col">
+                      <motion.div key="food" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="h-full flex flex-col p-5">
                         {foodStep === 0 && (
                           <div className="h-full flex flex-col">
-                             <div className="flex-1 bg-slate-200 rounded-xl relative overflow-hidden mb-4">
+                             <div className="flex-1 bg-slate-800 rounded-2xl relative overflow-hidden mb-6 border border-slate-700 shadow-inner">
                                 <div className="absolute inset-0 flex items-center justify-center">
-                                   <p className="text-slate-400 text-xs font-bold">CÁMARA</p>
+                                   <p className="text-slate-500 text-xs font-bold tracking-widest">CÁMARA ACTIVA</p>
                                 </div>
-                                <div className="absolute inset-0 border-2 border-white/50 m-8 rounded-lg">
-                                   <div className="w-full h-0.5 bg-red-500 top-1/2 absolute animate-[scan_2s_infinite]"></div>
+                                {/* Scanning animation */}
+                                <div className="absolute inset-0 m-8 border-2 border-white/30 rounded-lg">
+                                   <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-white"></div>
+                                   <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-white"></div>
+                                   <div className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-white"></div>
+                                   <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-white"></div>
+                                   <div className="w-full h-0.5 bg-green-400 top-1/2 absolute animate-[scan_2s_linear_infinite] shadow-[0_0_10px_rgba(74,222,128,0.8)]"></div>
                                 </div>
                              </div>
-                             <div className="grid grid-cols-2 gap-3">
-                                <button onClick={() => setFoodStep(1)} className="p-3 bg-red-100 text-red-700 rounded-lg text-xs font-bold">🍅 Tomate (No UE)</button>
-                                <button onClick={() => setFoodStep(2)} className="p-3 bg-green-100 text-green-700 rounded-lg text-xs font-bold">🍊 Naranja (UE)</button>
+                             
+                             <div className="space-y-3">
+                                <p className="text-xs text-center text-slate-400 mb-2">Simular escaneo de producto:</p>
+                                <button onClick={() => setFoodStep(1)} className="w-full p-4 bg-white border border-slate-200 shadow-sm hover:border-red-300 rounded-xl text-xs font-bold flex justify-between items-center group">
+                                    <span>🍅 Tomate (Importado)</span>
+                                    <ScanBarcode className="text-slate-300 group-hover:text-red-500" size={16} />
+                                </button>
+                                <button onClick={() => setFoodStep(2)} className="w-full p-4 bg-white border border-slate-200 shadow-sm hover:border-green-300 rounded-xl text-xs font-bold flex justify-between items-center group">
+                                    <span>🍊 Naranja (Nacional)</span>
+                                    <ScanBarcode className="text-slate-300 group-hover:text-green-500" size={16} />
+                                </button>
                              </div>
                           </div>
                         )}
                         {foodStep === 1 && (
                            <div className="h-full flex flex-col pt-4">
-                              <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-4 rounded-r-lg">
-                                 <h3 className="text-red-800 font-bold flex items-center gap-2"><AlertTriangle size={16}/> Alerta Sanitaria</h3>
-                                 <p className="text-xs text-red-600 mt-1">Pesticidas prohibidos detectados.</p>
+                              <div className="bg-red-50 border border-red-100 p-5 mb-6 rounded-2xl text-center shadow-sm">
+                                 <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center text-red-600 mx-auto mb-3">
+                                     <AlertTriangle size={24}/>
+                                 </div>
+                                 <h3 className="text-red-800 font-bold text-lg">Alerta Sanitaria</h3>
+                                 <p className="text-xs text-red-600 mt-1 font-medium">No cumple estándar UE</p>
                               </div>
-                              <div className="space-y-3 flex-grow">
-                                 <div className="flex justify-between border-b py-2"><span className="text-slate-500 text-sm">Origen</span> <span className="font-bold text-sm">Marruecos</span></div>
-                                 <div className="flex justify-between border-b py-2"><span className="text-slate-500 text-sm">Arancel</span> <span className="font-bold text-red-600 text-sm">+0.60 €/kg</span></div>
+                              
+                              <div className="space-y-0 divide-y divide-slate-100 bg-white rounded-xl border border-slate-100 overflow-hidden mb-6">
+                                 <div className="flex justify-between p-4 bg-slate-50"><span className="text-slate-500 text-xs uppercase font-bold">Origen</span> <span className="font-bold text-sm text-slate-900">Marruecos</span></div>
+                                 <div className="flex justify-between p-4"><span className="text-slate-500 text-sm">Pesticidas</span> <span className="font-bold text-red-600 text-xs bg-red-50 px-2 py-1 rounded">DETECTADOS</span></div>
+                                 <div className="flex justify-between p-4"><span className="text-slate-500 text-sm">Arancel Espejo</span> <span className="font-bold text-slate-900 text-sm">+0.60 €/kg</span></div>
                               </div>
-                              <button onClick={() => setFoodStep(0)} className="w-full py-3 bg-slate-900 text-white rounded-lg font-bold text-sm">Escanear otro</button>
+
+                              <button onClick={() => setFoodStep(0)} className="w-full py-4 bg-slate-900 text-white rounded-xl font-bold text-sm mt-auto shadow-lg">Escanear otro</button>
                            </div>
                         )}
                         {foodStep === 2 && (
                            <div className="h-full flex flex-col pt-4">
-                              <div className="bg-green-50 border-l-4 border-green-500 p-4 mb-4 rounded-r-lg">
-                                 <h3 className="text-green-800 font-bold flex items-center gap-2"><CheckCircle size={16}/> Certificado UE</h3>
-                                 <p className="text-xs text-green-600 mt-1">Cumple normativa calidad.</p>
+                              <div className="bg-green-50 border border-green-100 p-5 mb-6 rounded-2xl text-center shadow-sm">
+                                 <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600 mx-auto mb-3">
+                                     <CheckCircle size={24}/>
+                                 </div>
+                                 <h3 className="text-green-800 font-bold text-lg">Producto Certificado</h3>
+                                 <p className="text-xs text-green-600 mt-1 font-medium">Cumple normativa calidad UE</p>
                               </div>
-                              <div className="space-y-3 flex-grow">
-                                 <div className="flex justify-between border-b py-2"><span className="text-slate-500 text-sm">Origen</span> <span className="font-bold text-sm">Valencia</span></div>
-                                 <div className="flex justify-between border-b py-2"><span className="text-slate-500 text-sm">Precio Justo</span> <span className="font-bold text-green-600 text-sm">Garantizado</span></div>
+
+                              <div className="space-y-0 divide-y divide-slate-100 bg-white rounded-xl border border-slate-100 overflow-hidden mb-6">
+                                 <div className="flex justify-between p-4 bg-slate-50"><span className="text-slate-500 text-xs uppercase font-bold">Origen</span> <span className="font-bold text-sm text-slate-900">Valencia, España</span></div>
+                                 <div className="flex justify-between p-4"><span className="text-slate-500 text-sm">Precio en Origen</span> <span className="font-bold text-green-600 text-xs bg-green-50 px-2 py-1 rounded">JUSTO</span></div>
+                                 <div className="flex justify-between p-4"><span className="text-slate-500 text-sm">Huella Carbono</span> <span className="font-bold text-slate-900 text-sm">Baja</span></div>
                               </div>
-                              <button onClick={() => setFoodStep(0)} className="w-full py-3 bg-slate-900 text-white rounded-lg font-bold text-sm">Escanear otro</button>
+                              
+                              <button onClick={() => setFoodStep(0)} className="w-full py-4 bg-slate-900 text-white rounded-xl font-bold text-sm mt-auto shadow-lg">Escanear otro</button>
                            </div>
                         )}
                       </motion.div>
@@ -338,7 +509,7 @@ const AppDemo: React.FC = () => {
                 </div>
 
                 {/* Home Bar */}
-                <div className="h-1 bg-slate-300 mx-auto w-1/3 rounded-full mb-3"></div>
+                <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-1/3 h-1 bg-slate-300 rounded-full z-30"></div>
               </div>
             </motion.div>
           </div>
