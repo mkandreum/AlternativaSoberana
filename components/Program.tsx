@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, TrendingUp, Clock, AlertCircle, Coins, ArrowRight, BookOpen, Shield, Tractor, Users, Train, FileCheck } from 'lucide-react';
 
@@ -115,6 +115,19 @@ const phases: ProgramPhase[] = [
 
 const Program: React.FC = () => {
   const [activePhase, setActivePhase] = useState<ProgramPhase>(phases[0]);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const handlePhaseClick = (phase: ProgramPhase) => {
+    setActivePhase(phase);
+    // On mobile, scroll to content to make it visible
+    if (window.innerWidth < 1024 && contentRef.current) {
+       const yOffset = -40; 
+       const element = contentRef.current;
+       const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+       
+       window.scrollTo({top: y, behavior: 'smooth'});
+    }
+  };
 
   return (
     <section id="program" className="py-24 bg-slate-50 relative overflow-hidden">
@@ -137,29 +150,29 @@ const Program: React.FC = () => {
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 min-h-[600px]">
           
           {/* Sidebar Navigation */}
-          <div className="lg:w-1/3 flex flex-col gap-2">
+          <div className="lg:w-1/3 flex flex-col gap-2 lg:sticky lg:top-24 lg:self-start lg:max-h-[calc(100vh-8rem)]">
             {phases.map((phase) => (
               <button
                 key={phase.id}
-                onClick={() => setActivePhase(phase)}
+                onClick={() => handlePhaseClick(phase)}
                 className={`group relative p-4 rounded-xl text-left transition-all duration-300 border-2 ${
                   activePhase.id === phase.id 
                     ? 'bg-white border-orange-500 shadow-xl scale-[1.02] z-10' 
-                    : 'bg-white border-transparent hover:border-slate-200 text-slate-500'
+                    : 'bg-white border-transparent hover:border-slate-200 text-slate-500 hover:bg-slate-50'
                 }`}
               >
                 <div className="flex items-center gap-4">
-                  <div className={`w-12 h-12 rounded-lg flex items-center justify-center transition-colors ${
+                  <div className={`w-12 h-12 rounded-lg flex items-center justify-center transition-colors shrink-0 ${
                     activePhase.id === phase.id ? `${phase.color} text-white` : 'bg-slate-100 text-slate-400 group-hover:bg-slate-200'
                   }`}>
                     {phase.icon}
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <div className="text-[10px] uppercase font-bold tracking-widest opacity-60 mb-0.5">{phase.timeline}</div>
-                    <div className={`font-bold text-lg ${activePhase.id === phase.id ? 'text-slate-900' : 'text-slate-500'}`}>{phase.title}</div>
+                    <div className={`font-bold text-lg leading-tight ${activePhase.id === phase.id ? 'text-slate-900' : 'text-slate-500'}`}>{phase.title}</div>
                   </div>
                   {activePhase.id === phase.id && (
-                    <motion.div layoutId="arrow" className="ml-auto text-orange-500">
+                    <motion.div layoutId="arrow" className="text-orange-500">
                       <ArrowRight size={20} />
                     </motion.div>
                   )}
@@ -167,8 +180,8 @@ const Program: React.FC = () => {
               </button>
             ))}
 
-            {/* Budget Mini-Card */}
-            <div className="mt-auto bg-slate-900 rounded-2xl p-6 text-white overflow-hidden relative">
+            {/* Budget Mini-Card - Hidden on small mobile to save space, visible on tablet+ */}
+            <div className="mt-4 lg:mt-auto bg-slate-900 rounded-2xl p-6 text-white overflow-hidden relative shadow-lg">
                 <div className="absolute top-0 right-0 p-4 opacity-10"><Coins size={60} /></div>
                 <div className="relative z-10">
                     <div className="text-xs uppercase font-bold text-orange-400 mb-2">Financiación</div>
@@ -194,7 +207,7 @@ const Program: React.FC = () => {
           </div>
 
           {/* Main Content Area */}
-          <div className="lg:w-2/3">
+          <div className="lg:w-2/3 scroll-mt-24" ref={contentRef}>
             <AnimatePresence mode="wait">
               <motion.div
                 key={activePhase.id}
@@ -202,7 +215,7 @@ const Program: React.FC = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.3 }}
-                className="bg-white rounded-[2rem] p-8 lg:p-12 border border-slate-100 shadow-xl h-full flex flex-col"
+                className="bg-white rounded-[2rem] p-6 md:p-8 lg:p-12 border border-slate-100 shadow-xl h-full flex flex-col"
               >
                 <div className="mb-8 border-b border-slate-100 pb-8">
                   <div className="flex items-center gap-3 mb-4">
@@ -213,12 +226,12 @@ const Program: React.FC = () => {
                       <Clock size={14} /> {activePhase.timeline}
                     </span>
                   </div>
-                  <h3 className="text-3xl font-bold text-slate-900 mb-4">{activePhase.title}</h3>
+                  <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-6">{activePhase.title}</h3>
                   <div className="grid grid-cols-2 gap-4">
                      {activePhase.impact.map((metric, idx) => (
-                        <div key={idx} className="bg-slate-50 rounded-xl p-4 border border-slate-100">
-                           <div className="text-2xl font-bold text-slate-900">{metric.value}</div>
-                           <div className="text-xs font-bold uppercase text-slate-500">{metric.label}</div>
+                        <div key={idx} className="bg-slate-50 rounded-xl p-4 border border-slate-100 hover:border-slate-200 transition-colors">
+                           <div className="text-xl md:text-2xl font-bold text-slate-900">{metric.value}</div>
+                           <div className="text-[10px] md:text-xs font-bold uppercase text-slate-500">{metric.label}</div>
                            <div className="text-[10px] text-slate-400 mt-1">{metric.sub}</div>
                         </div>
                      ))}
@@ -231,13 +244,13 @@ const Program: React.FC = () => {
                    </h4>
                    <div className="grid gap-4">
                       {activePhase.keyMeasures.map((measure, idx) => (
-                         <div key={idx} className="group p-4 hover:bg-slate-50 rounded-xl border border-transparent hover:border-slate-100 transition-all flex gap-4">
+                         <div key={idx} className="group p-4 bg-slate-50 hover:bg-white rounded-xl border border-transparent hover:border-slate-200 hover:shadow-lg transition-all flex gap-4">
                             <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${activePhase.color} bg-opacity-10 text-slate-700 group-hover:bg-opacity-20`}>
                                {measure.icon}
                             </div>
                             <div>
-                               <h5 className="font-bold text-slate-900">{measure.title}</h5>
-                               <p className="text-sm text-slate-600 leading-relaxed mt-1">{measure.desc}</p>
+                               <h5 className="font-bold text-slate-900 text-sm md:text-base">{measure.title}</h5>
+                               <p className="text-xs md:text-sm text-slate-600 leading-relaxed mt-1">{measure.desc}</p>
                             </div>
                          </div>
                       ))}
