@@ -6,9 +6,15 @@ const Footer: React.FC = () => {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
+  const inputClasses = (isInvalid: boolean) =>
+    `flex-1 px-4 py-3 bg-slate-900 border rounded-lg outline-none text-white transition-colors ${
+      isInvalid ? 'border-red-500/70 focus:border-red-400' : 'border-slate-700 focus:border-orange-500'
+    }`;
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const isValid = name.trim().length > 2 && /\S+@\S+\.\S+/.test(email);
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    const isValid = name.trim().length > 2 && emailPattern.test(email);
 
     if (!isValid) {
       setStatus('error');
@@ -75,11 +81,11 @@ const Footer: React.FC = () => {
               </div>
             </div>
             
-            <form className="flex flex-col md:flex-row gap-4" onSubmit={handleSubmit} aria-live="polite">
+            <form className="flex flex-col md:flex-row gap-4" onSubmit={handleSubmit}>
               <input 
                 type="text" 
                 placeholder="Nombre Completo" 
-                className={`flex-1 px-4 py-3 bg-slate-900 border rounded-lg outline-none text-white transition-colors ${status === 'error' && !name ? 'border-red-500/70 focus:border-red-400' : 'border-slate-700 focus:border-orange-500'}`}
+                className={inputClasses(status === 'error' && !name)}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 aria-label="Nombre completo"
@@ -87,7 +93,7 @@ const Footer: React.FC = () => {
               <input 
                 type="email" 
                 placeholder="Correo Electrónico" 
-                className={`flex-1 px-4 py-3 bg-slate-900 border rounded-lg outline-none text-white transition-colors ${status === 'error' && !email ? 'border-red-500/70 focus:border-red-400' : 'border-slate-700 focus:border-orange-500'}`}
+                className={inputClasses(status === 'error' && !email)}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 aria-label="Correo electrónico"
@@ -98,7 +104,11 @@ const Footer: React.FC = () => {
             </form>
 
             {status !== 'idle' && (
-              <div className={`mt-4 flex items-center gap-3 text-sm rounded-lg px-4 py-3 border ${status === 'success' ? 'bg-green-500/10 border-green-500/40 text-green-200' : 'bg-red-500/10 border-red-500/40 text-red-200'}`}>
+              <div
+                aria-live="polite"
+                role="status"
+                className={`mt-4 flex items-center gap-3 text-sm rounded-lg px-4 py-3 border ${status === 'success' ? 'bg-green-500/10 border-green-500/40 text-green-200' : 'bg-red-500/10 border-red-500/40 text-red-200'}`}
+              >
                 {status === 'success' ? <CheckCircle size={18} /> : <AlertCircle size={18} />}
                 <span>
                   {status === 'success' ? '¡Gracias! Nos pondremos en contacto contigo en las próximas horas.' : 'Revisa que el nombre y el correo sean válidos antes de enviar.'}
