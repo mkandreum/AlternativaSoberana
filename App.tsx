@@ -79,7 +79,11 @@ const App: React.FC = () => {
         </div>
 
         {/* Desktop CTA Top Right */}
-        <button className="hidden md:block pointer-events-auto px-6 py-2 bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/10 text-white rounded-full font-semibold transition-all shadow-lg hover:shadow-orange-500/10 active:scale-95 group">
+        <button 
+          onClick={() => scrollTo('footer')}
+          aria-label="Abrir formulario de afiliación"
+          className="hidden md:block pointer-events-auto px-6 py-2 bg-white/5 hover:bg-white/10 backdrop-blur-md border border-white/10 text-white rounded-full font-semibold transition-all shadow-lg hover:shadow-orange-500/20 active:scale-95 group"
+        >
           <span className="group-hover:text-orange-200 transition-colors">Afiliarme</span>
         </button>
       </motion.header>
@@ -103,12 +107,15 @@ const App: React.FC = () => {
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5, type: "spring", stiffness: 200, damping: 20 }}
-          className="flex items-center gap-2 p-2 bg-slate-950/85 backdrop-blur-xl border border-white/10 rounded-full shadow-2xl shadow-black/40 ring-1 ring-white/5"
+          className="flex items-center gap-2 p-2 bg-slate-950/85 backdrop-blur-xl border border-white/10 rounded-full shadow-2xl shadow-black/40 ring-1 ring-white/5 ring-offset-2 ring-offset-black/20"
         >
           {navItems.map((item) => (
             <button
               key={item.id}
+              type="button"
               onClick={() => scrollTo(item.id)}
+              aria-label={item.label}
+              aria-current={activeSection === item.id ? 'page' : undefined}
               className={`relative px-5 py-2.5 rounded-full flex flex-col items-center justify-center transition-all duration-300 min-w-[75px] sm:min-w-[85px] ${
                 activeSection === item.id 
                   ? 'text-white' 
@@ -118,7 +125,7 @@ const App: React.FC = () => {
               {activeSection === item.id && (
                 <motion.div
                   layoutId="pill-active"
-                  className="absolute inset-0 bg-white/10 border border-white/5 rounded-full shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]"
+                  className="absolute inset-0 bg-white/10 border border-white/5 rounded-full shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] ring-1 ring-orange-400/30"
                   transition={{ type: "spring", bounce: 0.2, duration: 0.5 }}
                 />
               )}
