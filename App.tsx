@@ -50,27 +50,27 @@ const App: React.FC = () => {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="absolute top-0 left-0 w-full z-40 px-4 sm:px-6 py-6 flex justify-between items-center pointer-events-none"
+        className="absolute top-0 left-0 w-full z-40 px-3 sm:px-4 lg:px-6 py-4 sm:py-6 flex justify-between items-center pointer-events-none"
       >
-        <div className="flex items-center gap-3 pointer-events-auto">
+        <div className="flex items-center gap-2 sm:gap-3 pointer-events-auto">
           {/* Logo with Spain Flag Gradient */}
-          <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-xl shadow-lg shadow-red-900/20 overflow-hidden flex items-center justify-center group cursor-pointer border border-white/10">
+          <div className="relative w-9 h-9 sm:w-10 sm:h-10 lg:w-11 lg:h-11 rounded-lg sm:rounded-xl shadow-lg shadow-red-900/20 overflow-hidden flex items-center justify-center group cursor-pointer border border-white/10">
             {/* Flag Gradient Background */}
             <div className="absolute inset-0 bg-gradient-to-br from-[#AA151B] via-[#F1BF00] to-[#AA151B]"></div>
             
             {/* Shine Effect */}
             <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             
-            <span className="relative z-10 font-black text-lg sm:text-xl text-white drop-shadow-md tracking-tighter">AS</span>
+            <span className="relative z-10 font-black text-base sm:text-lg lg:text-xl text-white drop-shadow-md tracking-tighter">AS</span>
           </div>
 
           {/* Text - Now visible on mobile with responsive sizing */}
           <div className="flex flex-col justify-center">
-            <span className="block font-bold text-sm sm:text-lg tracking-tight leading-none text-white/95 drop-shadow-sm">
+            <span className="block font-bold text-xs sm:text-sm lg:text-lg tracking-tight leading-none text-white/95 drop-shadow-sm">
               ALTERNATIVA
             </span>
-            <div className="flex items-center gap-1.5">
-              <span className="block font-bold text-[10px] sm:text-xs tracking-[0.2em] uppercase leading-none text-orange-200/90">
+            <div className="flex items-center gap-1 sm:gap-1.5">
+              <span className="block font-bold text-[9px] sm:text-[10px] lg:text-xs tracking-[0.2em] uppercase leading-none text-orange-200/90">
                 SOBERANA
               </span>
               <span className="hidden sm:block w-1.5 h-1.5 rounded-full bg-[#F1BF00] shadow-[0_0_5px_#F1BF00]"></span>
@@ -98,21 +98,21 @@ const App: React.FC = () => {
       <div id="footer"><Footer /></div>
 
       {/* Modern Floating Pill Navigation - Wider & Larger Buttons */}
-      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 w-auto max-w-[95vw]">
+      <div className="fixed bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 z-50 w-auto max-w-[95vw] sm:max-w-[90vw]">
         <motion.nav 
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5, type: "spring", stiffness: 200, damping: 20 }}
-          className="flex items-center gap-2 p-2 bg-slate-950/85 backdrop-blur-xl border border-white/10 rounded-full shadow-2xl shadow-black/40 ring-1 ring-white/5"
+          className="flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 bg-slate-950/90 backdrop-blur-xl border border-white/10 rounded-full shadow-2xl shadow-black/40 ring-1 ring-white/5"
         >
           {navItems.map((item) => (
             <button
               key={item.id}
               onClick={() => scrollTo(item.id)}
-              className={`relative px-5 py-2.5 rounded-full flex flex-col items-center justify-center transition-all duration-300 min-w-[75px] sm:min-w-[85px] ${
+              className={`relative px-3 sm:px-5 py-2.5 sm:py-3 rounded-full flex flex-col items-center justify-center transition-all duration-300 min-w-[68px] sm:min-w-[80px] touch-manipulation ${
                 activeSection === item.id 
                   ? 'text-white' 
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-white/5 active:scale-95'
               }`}
             >
               {activeSection === item.id && (
@@ -125,11 +125,11 @@ const App: React.FC = () => {
               
               <span className="relative z-10 mb-0.5">
                 {React.cloneElement(item.icon as React.ReactElement, { 
-                  size: 22, 
+                  size: 20, 
                   strokeWidth: activeSection === item.id ? 2.5 : 2 
                 })}
               </span>
-              <span className={`relative z-10 text-[10px] sm:text-xs font-medium leading-tight tracking-tight transition-opacity duration-300 ${activeSection === item.id ? 'opacity-100 font-semibold' : 'opacity-60'}`}>
+              <span className={`relative z-10 text-[9px] sm:text-[10px] font-medium leading-tight tracking-tight transition-opacity duration-300 ${activeSection === item.id ? 'opacity-100 font-semibold' : 'opacity-60'}`}>
                 {item.label}
               </span>
               
@@ -138,7 +138,7 @@ const App: React.FC = () => {
                  <motion.div 
                     initial={{ scale: 0 }} 
                     animate={{ scale: 1 }}
-                    className="absolute bottom-1.5 w-1 h-1 bg-orange-400 rounded-full shadow-[0_0_4px_rgba(249,115,22,1)]"
+                    className="absolute bottom-1 w-1 h-1 bg-orange-400 rounded-full shadow-[0_0_4px_rgba(249,115,22,1)]"
                  />
               )}
             </button>

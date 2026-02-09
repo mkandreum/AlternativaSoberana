@@ -38,71 +38,71 @@ const AppDemo: React.FC = () => {
   };
 
   return (
-    <section id="demos" className="py-24 bg-slate-950 overflow-hidden relative border-t border-slate-800">
+    <section id="demos" className="py-16 sm:py-20 lg:py-24 bg-slate-950 overflow-hidden relative border-t border-slate-800">
       {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-orange-600/10 rounded-full blur-[100px] pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+      <div className="absolute top-0 right-0 w-[400px] sm:w-[600px] h-[400px] sm:h-[600px] bg-orange-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-[400px] sm:w-[600px] h-[400px] sm:h-[600px] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none"></div>
       
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
+        <div className="flex flex-col lg:flex-row items-center gap-12 sm:gap-16 lg:gap-24">
           
           {/* Description Text */}
           <div className="lg:w-1/2 text-white">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/20 border border-orange-500/40 text-orange-400 text-xs font-bold uppercase tracking-widest mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-500/20 border border-orange-500/40 text-orange-400 text-xs font-bold uppercase tracking-widest mb-6">
               <Smartphone size={14} />
               Proyecto Estado 1-Click
             </div>
-            <h2 className="text-4xl lg:text-5xl font-extrabold mb-6 leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-6 leading-tight">
               La Administración <br/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">en tu bolsillo.</span>
             </h2>
-            <p className="text-slate-400 text-lg mb-8 leading-relaxed">
+            <p className="text-slate-400 text-base sm:text-lg mb-8 leading-relaxed">
               Hemos fusionado 21 portales en una sola interfaz. La infraestructura digital está lista. No son maquetas, es lógica real aplicada a problemas reales.
             </p>
 
             {/* App Selection Tabs - Grid Layout */}
-            <div className="grid grid-cols-2 gap-3 mb-8">
+            <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-8">
               <button 
                 onClick={() => { setActiveTab(AppTab.GOVERNMENT); setGovStep(0); }}
-                className={`p-4 rounded-xl font-bold transition-all border text-left flex items-center gap-3 ${activeTab === AppTab.GOVERNMENT ? 'bg-slate-800 text-white border-orange-500 shadow-lg shadow-orange-900/20' : 'bg-slate-900/50 text-slate-400 border-slate-800 hover:bg-slate-800'}`}
+                className={`p-3 sm:p-4 rounded-xl font-bold transition-all border text-left flex items-center gap-2 sm:gap-3 touch-manipulation active:scale-95 ${activeTab === AppTab.GOVERNMENT ? 'bg-slate-800 text-white border-orange-500 shadow-lg shadow-orange-900/20' : 'bg-slate-900/50 text-slate-400 border-slate-800 hover:bg-slate-800'}`}
               >
-                <div className="p-2 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg text-white"><LayoutDashboard size={18} /></div>
-                <div>
-                  <div className="text-[10px] opacity-70 uppercase tracking-wider">Dashboard</div>
-                  <div className="text-sm">MiGobierno</div>
+                <div className="p-1.5 sm:p-2 bg-gradient-to-br from-orange-500 to-red-600 rounded-lg text-white"><LayoutDashboard size={16} className="sm:w-[18px] sm:h-[18px]" /></div>
+                <div className="min-w-0">
+                  <div className="text-[9px] sm:text-[10px] opacity-70 uppercase tracking-wider">Dashboard</div>
+                  <div className="text-xs sm:text-sm truncate">MiGobierno</div>
                 </div>
               </button>
 
               <button 
                 onClick={() => { setActiveTab(AppTab.BUSINESS); resetBusiness(); }}
-                className={`p-4 rounded-xl font-bold transition-all border text-left flex items-center gap-3 ${activeTab === AppTab.BUSINESS ? 'bg-slate-800 text-white border-blue-500 shadow-lg shadow-blue-900/20' : 'bg-slate-900/50 text-slate-400 border-slate-800 hover:bg-slate-800'}`}
+                className={`p-3 sm:p-4 rounded-xl font-bold transition-all border text-left flex items-center gap-2 sm:gap-3 touch-manipulation active:scale-95 ${activeTab === AppTab.BUSINESS ? 'bg-slate-800 text-white border-blue-500 shadow-lg shadow-blue-900/20' : 'bg-slate-900/50 text-slate-400 border-slate-800 hover:bg-slate-800'}`}
               >
-                <div className="p-2 bg-blue-600 rounded-lg text-white"><Store size={18} /></div>
-                <div>
-                  <div className="text-[10px] opacity-70 uppercase tracking-wider">Empresa</div>
-                  <div className="text-sm">MiNegocio</div>
+                <div className="p-1.5 sm:p-2 bg-blue-600 rounded-lg text-white"><Store size={16} className="sm:w-[18px] sm:h-[18px]" /></div>
+                <div className="min-w-0">
+                  <div className="text-[9px] sm:text-[10px] opacity-70 uppercase tracking-wider">Empresa</div>
+                  <div className="text-xs sm:text-sm truncate">MiNegocio</div>
                 </div>
               </button>
               
               <button 
                 onClick={() => { setActiveTab(AppTab.CITIZEN); setCitizenStep(0); }}
-                className={`p-4 rounded-xl font-bold transition-all border text-left flex items-center gap-3 ${activeTab === AppTab.CITIZEN ? 'bg-slate-800 text-white border-purple-500 shadow-lg shadow-purple-900/20' : 'bg-slate-900/50 text-slate-400 border-slate-800 hover:bg-slate-800'}`}
+                className={`p-3 sm:p-4 rounded-xl font-bold transition-all border text-left flex items-center gap-2 sm:gap-3 touch-manipulation active:scale-95 ${activeTab === AppTab.CITIZEN ? 'bg-slate-800 text-white border-purple-500 shadow-lg shadow-purple-900/20' : 'bg-slate-900/50 text-slate-400 border-slate-800 hover:bg-slate-800'}`}
               >
-                <div className="p-2 bg-purple-600 rounded-lg text-white"><Wallet size={18} /></div>
-                <div>
-                  <div className="text-[10px] opacity-70 uppercase tracking-wider">Personal</div>
-                  <div className="text-sm">MiCarpeta</div>
+                <div className="p-1.5 sm:p-2 bg-purple-600 rounded-lg text-white"><Wallet size={16} className="sm:w-[18px] sm:h-[18px]" /></div>
+                <div className="min-w-0">
+                  <div className="text-[9px] sm:text-[10px] opacity-70 uppercase tracking-wider">Personal</div>
+                  <div className="text-xs sm:text-sm truncate">MiCarpeta</div>
                 </div>
               </button>
 
               <button 
                 onClick={() => { setActiveTab(AppTab.FOOD); setFoodStep(0); }}
-                className={`p-4 rounded-xl font-bold transition-all border text-left flex items-center gap-3 ${activeTab === AppTab.FOOD ? 'bg-slate-800 text-white border-green-500 shadow-lg shadow-green-900/20' : 'bg-slate-900/50 text-slate-400 border-slate-800 hover:bg-slate-800'}`}
+                className={`p-3 sm:p-4 rounded-xl font-bold transition-all border text-left flex items-center gap-2 sm:gap-3 touch-manipulation active:scale-95 ${activeTab === AppTab.FOOD ? 'bg-slate-800 text-white border-green-500 shadow-lg shadow-green-900/20' : 'bg-slate-900/50 text-slate-400 border-slate-800 hover:bg-slate-800'}`}
               >
-                <div className="p-2 bg-green-600 rounded-lg text-white"><ScanBarcode size={18} /></div>
-                <div>
-                  <div className="text-[10px] opacity-70 uppercase tracking-wider">Consumo</div>
-                  <div className="text-sm">ComeLocal</div>
+                <div className="p-1.5 sm:p-2 bg-green-600 rounded-lg text-white"><ScanBarcode size={16} className="sm:w-[18px] sm:h-[18px]" /></div>
+                <div className="min-w-0">
+                  <div className="text-[9px] sm:text-[10px] opacity-70 uppercase tracking-wider">Consumo</div>
+                  <div className="text-xs sm:text-sm truncate">ComeLocal</div>
                 </div>
               </button>
             </div>
