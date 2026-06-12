@@ -1,20 +1,55 @@
 <div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+
+# 🇦🇪 AlternativaSoberana
+
+**Plataforma web desarrollada por Xyon Platforms**
+
+*Un producto de [Xyon Platforms](https://github.com/mkandreum)*
+
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
+
 </div>
 
-# Run and deploy your AI Studio app
+---
 
-This contains everything you need to run your app locally.
+## ¿Qué es AlternativaSoberana?
 
-View your app in AI Studio: https://ai.studio/apps/drive/1X8ydcPq4Uwh8a5kl3YXNyn5OBpSueaPt
+AlternativaSoberana es una plataforma web desarrollada por Xyon Platforms. Construida con TypeScript y Vite, con despliegue self-hosted vía Docker y Coolify.
 
-## Run Locally
+## ✨ Funcionalidades
 
-**Prerequisites:**  Node.js
+- Interfaz web moderna y reactiva
+- Gestión y administración de contenido
+- Despliegue self-hosted vía Docker
 
+## 🛠️ Stack técnico
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+| Capa | Tecnología |
+|------|----------|
+| Frontend | React + TypeScript + Vite |
+| Backend | Node.js + TypeScript |
+| Despliegue | Docker + Coolify |
+
+## 🚀 Instalación
+
+```bash
+git clone https://github.com/mkandreum/AlternativaSoberana.git
+cd AlternativaSoberana
+cp .env.example .env
+docker-compose up -d
+```
+
+### Desarrollo local
+
+```bash
+npm install
+npm run dev
+```
+
+## 🏢 Xyon Platforms
+
+AlternativaSoberana es un producto desarrollado y mantenido por **Xyon Platforms**, empresa especializada en soluciones digitales para negocios locales y pymes.
+
+> © Xyon Platforms — Todos los derechos reservados
